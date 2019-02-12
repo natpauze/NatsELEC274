@@ -1,17 +1,29 @@
+.text
 .global _start
+#just ALWAYS put the above 
 
-	.equ	LAST_RAM_WORD,	0x007FFFFC
+# Hello everyone! this is my hopefully throughly explained answers to the following questions from Prof. Manjikian's beautiful website
+	#Generate the specified subroutines and prepare test programs with sample data for verification with the on-line CPUlator simulation tool.
+		#Write a modular subroutine Max in Nios II assembly language that accepts two word-sized numbers A and B, and returns the value that is the larger of the two.
+
+		#Write a modular subroutine MaxList in Nios II assembly language that determines the largest value in a list of N word-sized elements, then returns that value. The subroutine should accept two arguments: a pointer to the list, the number N of list items.
+
+		#Write a modular subroutine CopyList in Nios II assembly language that copies all N word-sized elements from list1 to list2. The subroutine should accept three arguments: a pointer to list1, a pointer to list2, and the number, N, of items in list1. The subroutine can assume that there is enough space allocated for list2. The subroutine can also assume that N is greater than equal to 1. The subroutine has no return value.
+
+
+
+# .equ means your defining a constant, when this code gets assembled anywhere you wrote VALUE_X will be replace by the value you specified 
+.equ	LAST_RAM_WORD,	0x007FFFFC
 .equ	JTAG_UART_BASE,	0x10001000
 .equ	DATA_OFFSET,	0
 .equ	STATUS_OFFSET,	4
 .equ	WSPACE_MASK,	0xFFFF
 .equ	SPACE_MASK,		0x8000
 
-.text
-.global _start
-.org	0x00000000
 
-_start:
+.org	0x00000000	# this means that the following code will be put in memory stating at this adress (usually youll put main at 0x00, cause when the device turns on the PC (program counter, the thing that points to where in memory to get the next instruction) will *usually* start at adress 0)
+
+_start:			# this is the start point, code executions starts here 
 	movia 	r2, MSG6
     call 	PrintString
 	call 	GetDecimal99
@@ -26,8 +38,8 @@ _start:
 	call	PrintDecimal99
 	
     
-_end:
-br _end
+_end:		# notice how this is an infinite loop? when code reaches here it will loop forever, if you didnt, PC would just keep incrementeing and you would start to execute 
+	br _end
 # returns biggest in R2, A is in r3 and B is in r4 
 Max:
 	mov r2,r3	# move one into r2
